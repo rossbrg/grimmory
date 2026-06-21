@@ -12,6 +12,12 @@ public enum ApiError {
     GENERIC_UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "%s"),
 
     BOOK_NOT_FOUND(HttpStatus.NOT_FOUND, "Book not found with ID: %d"),
+    ACQUISITION_PROVIDER_NOT_FOUND(HttpStatus.NOT_FOUND, "Acquisition provider with ID %s not found"),
+    ACQUISITION_PROVIDER_KEY_UNKNOWN(HttpStatus.BAD_REQUEST, "Unknown acquisition provider: %s"),
+    ACQUISITION_PROVIDER_KEY_EXISTS(HttpStatus.CONFLICT, "An acquisition provider is already configured for: %s"),
+    ACQUISITION_PROVIDER_DISABLED(HttpStatus.CONFLICT, "Acquisition provider is not enabled: %s"),
+    ACQUISITION_REQUEST_NOT_FOUND(HttpStatus.NOT_FOUND, "Acquisition request with ID %s not found"),
+    ACQUISITION_FAILED(HttpStatus.BAD_GATEWAY, "Acquisition failed: %s"),
     EMAIL_PROVIDER_NOT_FOUND(HttpStatus.NOT_FOUND, "Email provider with ID %s not found"),
     DEFAULT_EMAIL_PROVIDER_NOT_FOUND(HttpStatus.NOT_FOUND, "Default email provider not found"),
     EMAIL_RECIPIENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Email recipient with ID %s not found"),

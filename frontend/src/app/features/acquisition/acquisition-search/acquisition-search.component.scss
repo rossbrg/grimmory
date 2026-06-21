@@ -1,0 +1,90 @@
+.acquisition-search {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+
+  .not-in-library {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.85;
+  }
+
+  .searching {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.8;
+  }
+
+  .no-candidates {
+    margin: 0;
+    opacity: 0.7;
+  }
+
+  .candidate-list,
+  .recent-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .candidate {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--p-content-border-color, rgb(255 255 255 / 12%));
+    border-radius: 0.5rem;
+
+    .candidate-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      min-width: 0;
+    }
+
+    .candidate-title {
+      font-weight: 600;
+    }
+
+    .candidate-author {
+      opacity: 0.75;
+    }
+
+    .candidate-tags {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+  }
+
+  .recent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    .recent-label {
+      font-weight: 600;
+      opacity: 0.8;
+    }
+
+    .recent-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .recent-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
