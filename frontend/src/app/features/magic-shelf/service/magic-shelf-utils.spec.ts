@@ -26,7 +26,7 @@ describe('magic-shelf-utils', () => {
       const rule = {
         field: 'dateFinished',
         operator: 'equals',
-        value: new Date('2024-06-15T00:00:00Z'),
+        value: new Date('2024-06-15T00:00:00'),
         valueStart: null,
         valueEnd: null
       };
@@ -40,8 +40,8 @@ describe('magic-shelf-utils', () => {
         field: 'addedOn',
         operator: 'in_between',
         value: null,
-        valueStart: new Date('2024-01-01T00:00:00Z'),
-        valueEnd: new Date('2024-12-31T00:00:00Z')
+        valueStart: new Date('2024-01-01T00:00:00'),
+        valueEnd: new Date('2024-12-31T00:00:00')
       };
 
       const result = serializeDateRules(rule) as Record<string, unknown>;
@@ -119,7 +119,7 @@ describe('magic-shelf-utils', () => {
           {
             field: 'addedOn',
             operator: 'equals',
-            value: new Date('2024-03-15T00:00:00Z'),
+            value: new Date('2024-03-15T00:00:00'),
             valueStart: null,
             valueEnd: null
           }
@@ -235,7 +235,7 @@ describe('magic-shelf-utils', () => {
       const rule = {
         field: 'lastReadTime',
         operator: 'equals',
-        value: new Date('2024-08-20T00:00:00Z'),
+        value: new Date('2024-08-20T00:00:00'),
         valueStart: null,
         valueEnd: null
       };
@@ -295,7 +295,7 @@ describe('magic-shelf-utils', () => {
               {
                 field: 'addedOn',
                 operator: 'equals',
-                value: new Date('2024-11-01T00:00:00Z'),
+                value: new Date('2024-11-01T00:00:00'),
                 valueStart: null,
                 valueEnd: null
               }
