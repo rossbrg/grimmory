@@ -78,7 +78,7 @@ The OpenAPI surface (incl. the acquisition endpoints) is gated behind `API_DOCS_
 
 ```bash
 API_DOCS_ENABLED=true just api run
-# Swagger/OpenAPI served at /v3/api-docs (springdoc)
+# Swagger/OpenAPI served at /api/openapi.json (springdoc)
 ```
 
 ## AGPL & upstreaming
