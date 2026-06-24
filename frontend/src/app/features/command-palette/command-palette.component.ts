@@ -13,11 +13,12 @@ import { IconDisplayComponent } from '../../shared/components/icon-display/icon-
 import { MOBILE_SHELL_ACTIVE_PROPERTY } from '../../shared/layout/layout.service';
 import { PaletteItem } from './command-palette.model';
 import { CommandPaletteService } from './command-palette.service';
+import { AcquisitionSearchComponent } from '../acquisition/acquisition-search/acquisition-search.component';
 
 @Component({
   selector: 'app-command-palette',
   standalone: true,
-  imports: [A11yModule, OverlayModule, FormsModule, TranslocoDirective, TranslocoPipe, IconDisplayComponent, CoverPlaceholderComponent],
+  imports: [A11yModule, OverlayModule, FormsModule, TranslocoDirective, TranslocoPipe, IconDisplayComponent, CoverPlaceholderComponent, AcquisitionSearchComponent],
   templateUrl: './command-palette.component.html',
   styleUrl: './command-palette.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

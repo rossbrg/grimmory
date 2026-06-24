@@ -1,0 +1,76 @@
+<ng-container *transloco="let t">
+  <div class="acquisition-search">
+    <div class="not-in-library">
+      <i class="pi pi-info-circle" aria-hidden="true"></i>
+      <span>{{ t('acquisition.notInLibrary') }}</span>
+    </div>
+
+    @if (canAcquire()) {
+      @if (!searched() && !searching()) {
+        <p-button
+          icon="pi pi-search-plus"
+          [label]="t('acquisition.findDownloadOptions')"
+          severity="secondary"
+          [outlined]="true"
+          (onClick)="findDownloadOptions()">
+        </p-button>
+      }
+
+      @if (searching()) {
+        <div class="searching">
+          <p-progress-spinner [style]="{width: '24px', height: '24px'}"></p-progress-spinner>
+          <span>{{ t('acquisition.searching') }}</span>
+        </div>
+      }
+
+      @if (searched() && !searching()) {
+        @if (candidates().length === 0) {
+          <p class="no-candidates">{{ t('acquisition.noCandidates', {query: query()}) }}</p>
+        } @else {
+          <ul class="candidate-list">
+            @for (candidate of candidates(); track candidate.providerKey + ':' + candidate.externalId) {
+              <li class="candidate">
+                <div class="candidate-info">
+                  <span class="candidate-title">{{ candidate.title || candidate.externalId }}</span>
+                  @if (candidate.author) {
+                    <span class="candidate-author">{{ candidate.author }}</span>
+                  }
+                  <div class="candidate-tags">
+                    <p-tag [value]="candidate.providerKey" severity="info"></p-tag>
+                    @if (candidate.format) {
+                      <p-tag [value]="candidate.format" severity="secondary"></p-tag>
+                    }
+                    <p-tag
+                      [value]="candidate.directDownloadAvailable ? t('acquisition.directDownload') : t('acquisition.requestOnly')"
+                      [severity]="candidate.directDownloadAvailable ? 'success' : 'warn'"></p-tag>
+                  </div>
+                </div>
+                <p-button
+                  icon="pi pi-download"
+                  [label]="t('acquisition.acquire')"
+                  size="small"
+                  [loading]="triggeringId() === candidate.externalId"
+                  (onClick)="acquire(candidate)">
+                </p-button>
+              </li>
+            }
+          </ul>
+        }
+      }
+
+      @if (recentRequests().length > 0) {
+        <div class="recent">
+          <div class="recent-label">{{ t('acquisition.recentRequests') }}</div>
+          <ul class="recent-list">
+            @for (request of recentRequests(); track request.id) {
+              <li class="recent-item">
+                <span class="recent-title">{{ request.title || request.externalId }}</span>
+                <p-tag [value]="t('acquisition.status.' + request.status)" [severity]="statusSeverity(request.status)"></p-tag>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    }
+  </div>
+</ng-container>

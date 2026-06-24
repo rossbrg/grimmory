@@ -1,0 +1,48 @@
+{
+  "title": "Acquisition providers",
+  "subtitle": "Configure external providers that can fulfil books missing from your library. Providers are disabled by default; only admins can configure them, and only users with the download permission can trigger an acquisition.",
+  "addProvider": "Add provider",
+  "empty": "No acquisition providers configured yet.",
+  "loadError": "Failed to load acquisition providers.",
+  "createSuccess": "Acquisition provider created.",
+  "updateSuccess": "Acquisition provider updated.",
+  "saveError": "Failed to save the acquisition provider.",
+  "deleteConfirm": "Delete the acquisition provider \"{{name}}\"?",
+  "deleteSuccess": "Acquisition provider deleted.",
+  "deleteError": "Failed to delete the acquisition provider.",
+  "toggleEnabledTooltip": "Enable or disable this provider",
+  "anyContentType": "Any",
+  "tokenStored": "Stored",
+  "tokenNone": "None",
+  "validation": {
+    "required": "A provider and a name are required."
+  },
+  "columns": {
+    "name": "Name",
+    "provider": "Provider",
+    "enabled": "Enabled",
+    "mode": "Mode",
+    "baseUrl": "Base URL",
+    "contentTypes": "Content types",
+    "token": "Token"
+  },
+  "mode": {
+    "request": "Request",
+    "directDownload": "Direct download"
+  },
+  "form": {
+    "createTitle": "Add acquisition provider",
+    "editTitle": "Edit acquisition provider",
+    "provider": "Provider",
+    "name": "Display name",
+    "namePlaceholder": "e.g. Shelfmark",
+    "baseUrl": "Base URL",
+    "token": "API token",
+    "tokenKeep": "Leave blank to keep the stored token",
+    "tokenPlaceholder": "Provider API token",
+    "mode": "Acquisition mode",
+    "contentTypes": "Allowed content types",
+    "contentTypesHint": "Comma-separated, e.g. EPUB, PDF. Leave blank to allow any.",
+    "enabled": "Enabled"
+  }
+}

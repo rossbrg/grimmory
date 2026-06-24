@@ -1,0 +1,117 @@
+<ng-container *transloco="let t">
+  <div class="acquisition-providers">
+    <div class="header">
+      <div class="header-text">
+        <h2>{{ t('settingsAcquisition.title') }}</h2>
+        <p class="subtitle">{{ t('settingsAcquisition.subtitle') }}</p>
+      </div>
+      <p-button
+        icon="pi pi-plus"
+        [label]="t('settingsAcquisition.addProvider')"
+        [disabled]="creatableProviders().length === 0 || !!formModel"
+        (onClick)="startCreate()">
+      </p-button>
+    </div>
+
+    @if (loading()) {
+      <div class="loading"><p-progress-spinner [style]="{width: '36px', height: '36px'}"></p-progress-spinner></div>
+    } @else {
+      @if (providers().length === 0) {
+        <p class="empty">{{ t('settingsAcquisition.empty') }}</p>
+      } @else {
+        <p-table [value]="providers()" styleClass="p-datatable-sm" [tableStyle]="{'min-width': '40rem'}">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>{{ t('settingsAcquisition.columns.name') }}</th>
+              <th>{{ t('settingsAcquisition.columns.provider') }}</th>
+              <th>{{ t('settingsAcquisition.columns.enabled') }}</th>
+              <th>{{ t('settingsAcquisition.columns.mode') }}</th>
+              <th>{{ t('settingsAcquisition.columns.baseUrl') }}</th>
+              <th>{{ t('settingsAcquisition.columns.contentTypes') }}</th>
+              <th>{{ t('settingsAcquisition.columns.token') }}</th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-provider>
+            <tr>
+              <td>{{ provider.name }}</td>
+              <td><p-tag [value]="provider.providerKey" severity="info"></p-tag></td>
+              <td>
+                <p-checkbox [binary]="true" [ngModel]="provider.enabled" (onChange)="toggleEnabled(provider)"
+                            [pTooltip]="t('settingsAcquisition.toggleEnabledTooltip')"></p-checkbox>
+              </td>
+              <td>{{ t('settingsAcquisition.mode.' + (provider.mode === 'DIRECT_DOWNLOAD' ? 'directDownload' : 'request')) }}</td>
+              <td class="muted">{{ provider.baseUrl || '—' }}</td>
+              <td class="muted">{{ provider.allowedContentTypes?.length ? provider.allowedContentTypes.join(', ') : t('settingsAcquisition.anyContentType') }}</td>
+              <td>
+                <p-tag [value]="provider.tokenSet ? t('settingsAcquisition.tokenStored') : t('settingsAcquisition.tokenNone')"
+                       [severity]="provider.tokenSet ? 'success' : 'secondary'"></p-tag>
+              </td>
+              <td class="actions">
+                <p-button icon="pi pi-pencil" severity="secondary" [text]="true"
+                          [pTooltip]="t('common.edit')" (onClick)="startEdit(provider)"></p-button>
+                <p-button icon="pi pi-trash" severity="danger" [text]="true"
+                          [pTooltip]="t('common.delete')" (onClick)="deleteProvider(provider)"></p-button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      }
+    }
+
+    @if (formModel; as f) {
+      <div class="provider-form">
+        <h3>{{ f.id === null ? t('settingsAcquisition.form.createTitle') : t('settingsAcquisition.form.editTitle') }}</h3>
+
+        <div class="field">
+          <span class="field-label">{{ t('settingsAcquisition.form.provider') }}</span>
+          @if (f.id === null) {
+            <p-select [options]="creatableProviders()" optionLabel="label" optionValue="value"
+                      [ngModel]="f.providerKey" (onChange)="onProviderKeySelected($event.value)"
+                      appendTo="body" styleClass="w-full"></p-select>
+          } @else {
+            <p-tag [value]="f.providerKey" severity="info"></p-tag>
+          }
+        </div>
+
+        <div class="field">
+          <span class="field-label">{{ t('settingsAcquisition.form.name') }}</span>
+          <input pInputText [(ngModel)]="f.name" [placeholder]="t('settingsAcquisition.form.namePlaceholder')"/>
+        </div>
+
+        <div class="field">
+          <span class="field-label">{{ t('settingsAcquisition.form.baseUrl') }}</span>
+          <input pInputText [(ngModel)]="f.baseUrl" placeholder="https://shelfmark.example.com"/>
+        </div>
+
+        <div class="field">
+          <span class="field-label">{{ t('settingsAcquisition.form.token') }}</span>
+          <p-password [(ngModel)]="f.apiToken" [feedback]="false" [toggleMask]="true"
+                      [placeholder]="f.tokenSet ? t('settingsAcquisition.form.tokenKeep') : t('settingsAcquisition.form.tokenPlaceholder')"></p-password>
+        </div>
+
+        <div class="field">
+          <span class="field-label">{{ t('settingsAcquisition.form.mode') }}</span>
+          <p-select [options]="modeOptions" optionLabel="label" optionValue="value"
+                    [(ngModel)]="f.mode" appendTo="body" styleClass="w-full"></p-select>
+        </div>
+
+        <div class="field">
+          <span class="field-label">{{ t('settingsAcquisition.form.contentTypes') }}</span>
+          <input pInputText [(ngModel)]="f.allowedContentTypesText" placeholder="EPUB, PDF, MP3"/>
+          <small class="hint">{{ t('settingsAcquisition.form.contentTypesHint') }}</small>
+        </div>
+
+        <div class="field-inline">
+          <p-checkbox [binary]="true" [(ngModel)]="f.enabled" inputId="acq-enabled"></p-checkbox>
+          <label for="acq-enabled">{{ t('settingsAcquisition.form.enabled') }}</label>
+        </div>
+
+        <div class="form-actions">
+          <p-button [label]="t('common.cancel')" severity="secondary" [text]="true" (onClick)="cancel()"></p-button>
+          <p-button [label]="t('common.save')" icon="pi pi-check" [loading]="saving()" (onClick)="save()"></p-button>
+        </div>
+      </div>
+    }
+  </div>
+</ng-container>
