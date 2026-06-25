@@ -2,6 +2,14 @@ set shell := ["bash", "-eu", "-o", "pipefail", "-c"]
 
 gradle := "./gradlew"
 
+# NOTE: `--parallel` is intentionally omitted from the Gradle invocations below.
+# This is a single-module build (see settings.gradle.kts), so `--parallel` only
+# parallelizes work across Gradle projects and yields no speedup here, while it
+# triggers an intermittent test-results binary race
+# (NoSuchFileException: .../test-results/test/binary/in-progress-results-generic.bin).
+# Test execution can still be parallelized within the module via `maxParallelForks`
+# in build.gradle.kts if that ever becomes worthwhile. Do not re-add `--parallel`.
+
 # Show the backend recipes available in this directory.
 help:
     @just --list
@@ -16,27 +24,27 @@ run profile='dev':
 
 # Build the backend jar and run the standard Gradle build lifecycle.
 build:
-    {{ gradle }} build --no-daemon --parallel --build-cache
+    {{ gradle }} build --no-daemon --build-cache
 
 # Build the backend jar and export build/openapi/grimmory-openapi.json.
 openapi-export:
-    {{ gradle }} buildOpenApiArtifacts --no-daemon --parallel --build-cache
+    {{ gradle }} buildOpenApiArtifacts --no-daemon --build-cache
 
 # Run the backend test suite.
 test:
-    {{ gradle }} test --no-daemon --parallel --build-cache
+    {{ gradle }} test --no-daemon --build-cache
 
 # Run a single backend test class, for example `just test-class test_class=org.booklore.service.BookServiceTest`.
 test-class test_class:
-    {{ gradle }} test --tests "{{ test_class }}" --no-daemon --parallel --build-cache
+    {{ gradle }} test --tests "{{ test_class }}" --no-daemon --build-cache
 
 # Run tests and generate JaCoCo coverage output.
 coverage:
-    {{ gradle }} test jacocoTestReport --no-daemon --parallel --build-cache
+    {{ gradle }} test jacocoTestReport --no-daemon --build-cache
 
 # Run the Gradle `check` lifecycle used for local backend verification.
 check:
-    {{ gradle }} check --no-daemon --parallel --build-cache
+    {{ gradle }} check --no-daemon --build-cache
 
 # Remove backend build outputs.
 clean:
